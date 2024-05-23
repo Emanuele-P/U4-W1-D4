@@ -8,31 +8,42 @@ public class PartTime extends Employee {
     private double hourlySalary;
 
     //constructor
-    public PartTime(int salary, DepartmentType department, int workingHours) {
-        super(salary, department);
+    public PartTime(DepartmentType department) {
+        super(0, department);
         this.workingHours = 20;
+        salaryByDepartment(department);
+    }
+
+    //methods
+
+    public static PartTime[] partTimers() {
+        return new PartTime[]{
+                new PartTime(DepartmentType.PRODUCTION),
+                new PartTime(DepartmentType.ADMINISTRATION),
+                new PartTime(DepartmentType.SALES),
+        };
+    }
+
+    private void salaryByDepartment(DepartmentType department) {
+        switch (department) {
+            case PRODUCTION:
+                this.hourlySalary = 13;
+                break;
+            case ADMINISTRATION:
+                this.hourlySalary = 15;
+                break;
+            case SALES:
+                this.hourlySalary = 10;
+                break;
+            default:
+                this.hourlySalary = 0;
+                break;
+        }
     }
 
     @Override
-    public void calculateSalary() {
-        double hourlySalary = 0;
-
-        switch (getDepartment()) {
-            case PRODUCTION:
-                hourlySalary = 15;
-                break;
-            case ADMINISTRATION:
-                hourlySalary = 20;
-                break;
-            case SALES:
-                hourlySalary = 12;
-                break;
-            default:
-                break;
-        }
-
-        double monthlySalary = (hourlySalary * workingHours) * 4;
-        System.out.println("Monthly salary is: " + monthlySalary + "€");
+    public double calculateSalary() {
+        return (hourlySalary * workingHours) * 4;
     }
 
     //encapsulation
@@ -43,5 +54,13 @@ public class PartTime extends Employee {
 
     public void setHourlySalary(double hourlySalary) {
         this.hourlySalary = hourlySalary;
+    }
+
+    @Override
+    public String toString() {
+        return "PartTime{" +
+                "workingHours=" + workingHours +
+                ", hourlySalary=" + hourlySalary +
+                '}';
     }
 }

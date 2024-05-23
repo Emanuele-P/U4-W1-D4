@@ -8,30 +8,41 @@ public class FullTime extends Employee {
     private double baseSalary;
 
     //constructor
-    public FullTime(int salary, DepartmentType department, double baseSalary) {
-        super(salary, department);
+    public FullTime(DepartmentType department) {
+        super(0, department);
         this.baseSalary = 1500;
+        salaryByDepartment(department);
     }
 
-    @Override
-    public void calculateSalary() {
-        double monthlySalary = baseSalary;
+    //methods
 
+    public static FullTime[] fullTimers() {
+        return new FullTime[]{
+                new FullTime(DepartmentType.PRODUCTION),
+                new FullTime(DepartmentType.ADMINISTRATION),
+                new FullTime(DepartmentType.SALES),
+        };
+    }
+
+    private void salaryByDepartment(DepartmentType department) {
         switch (getDepartment()) {
             case PRODUCTION:
-                monthlySalary = baseSalary + 300;
+                this.baseSalary = baseSalary + 300;
                 break;
             case ADMINISTRATION:
-                monthlySalary = baseSalary + 800;
+                this.baseSalary = baseSalary + 800;
                 break;
             case SALES:
-                monthlySalary = baseSalary + 500;
+                this.baseSalary = baseSalary + 500;
                 break;
             default:
                 break;
         }
+    }
 
-        System.out.println("Monthly salary is: " + monthlySalary + "€");
+    @Override
+    public double calculateSalary() {
+        return baseSalary;
     }
 
     public double getBaseSalary() {
@@ -40,5 +51,12 @@ public class FullTime extends Employee {
 
     public void setBaseSalary(double baseSalary) {
         this.baseSalary = baseSalary;
+    }
+
+    @Override
+    public String toString() {
+        return "FullTime{" +
+                "baseSalary=" + baseSalary +
+                '}';
     }
 }

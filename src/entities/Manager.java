@@ -7,30 +7,41 @@ public class Manager extends Employee {
     private double baseSalary;
 
     //constructor
-    public Manager(int salary, DepartmentType department, double baseSalary) {
-        super(salary, department);
-        this.baseSalary = 2500;
+    public Manager(DepartmentType department) {
+        super(0, department);
+        this.baseSalary = 3000;
+        salaryByDepartment(department);
     }
 
-    @Override
-    public void calculateSalary() {
-        double monthlySalary = baseSalary;
+    //methods
 
+    public static Manager[] managers() {
+        return new Manager[]{
+                new Manager(DepartmentType.PRODUCTION),
+                new Manager(DepartmentType.ADMINISTRATION),
+                new Manager(DepartmentType.SALES),
+        };
+    }
+
+    public void salaryByDepartment(DepartmentType department) {
         switch (getDepartment()) {
             case PRODUCTION:
-                monthlySalary = baseSalary + 500;
+                this.baseSalary += 500;
                 break;
             case ADMINISTRATION:
-                monthlySalary = baseSalary + 1000;
+                this.baseSalary += 1000;
                 break;
             case SALES:
-                monthlySalary = baseSalary + 800;
+                this.baseSalary += 800;
                 break;
             default:
                 break;
         }
+    }
 
-        System.out.println("Monthly salary is: " + monthlySalary + "€");
+    @Override
+    public double calculateSalary() {
+        return baseSalary;
     }
 
     public double getBaseSalary() {
@@ -39,5 +50,12 @@ public class Manager extends Employee {
 
     public void setBaseSalary(double baseSalary) {
         this.baseSalary = baseSalary;
+    }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "baseSalary=" + baseSalary +
+                '}';
     }
 }
